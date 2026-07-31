@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WA Hydrography: OSM vs NHD</title>
+
+<link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet" />
+<link href="https://unpkg.com/@maplibre/maplibre-gl-compare@0.5/dist/maplibre-gl-compare.css" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+<!-- Inline SVG favicon (a water-drop emoji) so the tab icon needs no separate image file. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💧</text></svg>">
+</head>
+<body>
+
+<div id="map"></div>
+<!-- #map-after and #compare-slider start empty/hidden. On first use of swipe compare, app.js's
+     ensureAfterMap() creates the second MapLibre map into #map-after, and toggleCompareMode()
+     creates the maplibregl.Compare slider control into #compare-slider. -->
+<div id="map-after" hidden></div>
+<div id="compare-slider" hidden></div>
+
+<div id="panel">
+  <h1>Hydrography of Washington</h1>
+  <p class="subtitle">OpenStreetMap (OSM) vs. USGS National Hydrography Dataset (NHD) coverage of rivers, 
+    streams, canals, and other linear hydrography of Washington State
+  </p>
+  <section>
+    <h2>Basemap</h2>
+    <label class="row">
+      <input type="radio" name="basemap-choice" value="street" checked>
+      Street map (CartoCDN / OSM)
+    </label>
+    <label class="row">
+      <input type="radio" name="basemap-choice" value="satellite">
+      Satellite imagery (USGS)
+    </label>
+  </section>
+
+  <section>
+    <h2>Hydrography layers</h2>
+    <div id="stream-checkbox-controls">
+      <label class="row">
+        <input type="checkbox" id="toggle-osm-streams" checked>
+        <span class="swatch swatch-osm"></span>
+        OSM waterways
+      </label>
+      <label class="row">
+        <input type="checkbox" id="toggle-nhd-streams" checked>
+        <span class="swatch swatch-nhd"></span>
+        NHD flowlines
+      </label>
+    </div>
+    <!-- Populated by app.js's renderStreamSideControls() with one Left/Right/Off radio row
+         per stream layer; only shown while swipe compare is active. -->
+    <div id="stream-side-controls" hidden></div>
+  </section>
+
+  <section>
+    <h2>Compare</h2>
+    <button id="compare-toggle-btn" class="panel-btn" type="button">Enable swipe compare</button>
+  </section>
+
+  <section>
+    <h2>Boundary layer</h2>
+    <label class="row">
+      <input type="radio" name="polygon-layer" id="poly-counties" value="counties" checked>
+      Counties
+    </label>
+    <select id="picklist-counties" class="picklist"></select>
+
+    <label class="row">
+      <input type="radio" name="polygon-layer" id="poly-huc8" value="huc8">
+      HUC-8 watersheds
+    </label>
+    <select id="picklist-huc8" class="picklist"></select>
+
+    <label class="row">
+      <input type="radio" name="polygon-layer" id="poly-huc10" value="huc10">
+      HUC-10 watersheds
+    </label>
+    <select id="picklist-huc10" class="picklist"></select>
+  </section>
+
+  <section id="info-panel">
+    <h2>Selected area</h2>
+    <p id="info-placeholder" class="muted">Click a boundary on the map, or pick one from a list above.</p>
+    <div id="info-content" hidden>
+      <p><strong id="info-name"></strong></p>
+      <table id="info-stats">
+        <tr><td>OSM miles</td><td id="info-osm-miles">&ndash;</td></tr>
+        <tr><td>NHD miles</td><td id="info-nhd-miles">&ndash;</td></tr>
+        <tr><td>OSM / NHD coverage</td><td id="info-ratio">&ndash;</td></tr>
+      </table>
+      <div id="info-osm-breakdown-group" class="info-breakdown-group" hidden>
+        <p class="info-breakdown-label">OSM by category</p>
+        <table id="info-osm-breakdown" class="info-breakdown"></table>
+      </div>
+      <div id="info-nhd-breakdown-group" class="info-breakdown-group" hidden>
+        <p class="info-breakdown-label">NHD by category</p>
+        <table id="info-nhd-breakdown" class="info-breakdown"></table>
+      </div>
+    </div>
+  </section>
+
+  <button id="about-btn" class="panel-btn" type="button">About</button>
+</div>
+
+<div id="about-modal" class="modal" hidden>
+  <div class="modal-content">
+    <button id="about-close" class="modal-close" type="button" aria-label="Close">&times;</button>
+    <h2>About this map</h2>
+    <p>
+      This map compares two separately maintained hydrography datasets covering
+      Washington State:
+    </p>
+    <ul>
+      <li>
+        <strong>OpenStreetMap (OSM) waterways</strong> &mdash; crowd-sourced line features tagged as 
+        streams, rivers, canals, etc, extracted from the OSM planet dataset.
+      </li>
+      <li>
+        <strong>USGS National Hydrography Dataset (NHD) flowlines</strong> &mdash; an
+        authoritative, professionally maintained hydrography dataset produced by the
+        U.S. Geological Survey.
+      </li>
+    </ul>
+    <p>
+      Note: the difference in terminology (waterways vs. flowlines) simply reflects what each 
+      organization calls these features in its source data.
+    </p>
+    <p>
+      Boundary layers (counties, and USGS HUC-8 and HUC-10 watersheds) let one select an area and
+      compare stream mileage between the two datasets within it. Mileage statistics are
+      precomputed offline from these two datasets and shown in the sidebar when a boundary
+      is selected.
+    </p>
+    <p class="muted">
+      Street basemap &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>,
+      &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+      Satellite imagery courtesy of the
+      <a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">U.S. Geological Survey, The National Map</a>.
+    </p>
+  </div>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3/dist/pmtiles.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-compare@0.5/dist/maplibre-gl-compare.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
