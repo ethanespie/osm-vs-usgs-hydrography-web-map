@@ -11,14 +11,14 @@ Hydrography Dataset (NHD) each map rivers, streams, and canals across Washington
 State. Pick a county or watershed to see stream mileage from both datasets side by
 side, or use swipe-compare to see the two networks overlaid directly on the map.
 
-This was  my final project for my grad-level course _Open Web Mapping_ at Penn State
+This was  my final project for my graduate-level course _Open Web Mapping_ at Penn State
 University.
 
 ## Features
 
 - OSM waterways and NHD flowlines as toggleable layers over a street or satellite
   basemap
-- Three selectable boundary layers — counties, HUC-8 watersheds, HUC-10 watersheds
+- Three selectable boundary layers: counties, HUC-8 watersheds, HUC-10 watersheds
 - Click a boundary (or pick one from a sidebar list) to see precomputed OSM vs. NHD
   stream mileage for that area
 - Swipe/compare mode for comparing the two layers side by side
@@ -28,20 +28,20 @@ University.
 
 - [MapLibre GL JS](https://maplibre.org/) for the map
 - [PMTiles](https://protomaps.com/docs/pmtiles) for the stream layers (single-file
-  vector tiles, served over plain HTTP range requests — no tile server needed)
-- Fully static site — HTML/CSS/vanilla JS, no build step, no backend
+  vector tiles, served over plain HTTP range requests: no tile server needed)
+- Fully static site: HTML/CSS/vanilla JS, no build step, no backend
 
 ## Repo contents
 
-- [`index.html`](index.html), [`app.js`](app.js), [`style.css`](style.css) — the site
-- `data/` — the small data files the site loads directly: boundary polygons
+- [`index.html`](index.html), [`app.js`](app.js), [`style.css`](style.css): the site
+- `data/`: the small data files the site loads directly: boundary polygons
   (GeoJSON) and precomputed stream-mileage stats (JSON). The stream layers
   themselves (`osm_waterways.pmtiles`, `nhd_flowlines.pmtiles`) are too large for
   this repo.
-- [`scripts/serve.py`](scripts/serve.py) — a small dev-only local server (adds HTTP
+- [`scripts/serve.py`](scripts/serve.py): a small dev-only local server (adds HTTP
   Range support, which PMTiles needs, on top of Python's built-in static file
   server)
-- `scripts/process_new_input_data.py` — the data-prep pipeline that turns raw
+- `scripts/process_new_input_data.py`: the data-prep pipeline that turns raw
   OSM/NHD source data into everything in `data/`, plus the mileage stats. **(Coming
   soon)**
 
