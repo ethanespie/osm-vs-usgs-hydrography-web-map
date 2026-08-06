@@ -26,18 +26,6 @@
     streams, canals, and other linear hydrography of Washington State
   </p>
   <section>
-    <h2>Basemap</h2>
-    <label class="row">
-      <input type="radio" name="basemap-choice" value="street" checked>
-      Street map (CartoCDN / OSM)
-    </label>
-    <label class="row">
-      <input type="radio" name="basemap-choice" value="satellite">
-      Satellite imagery (USGS)
-    </label>
-  </section>
-
-  <section>
     <h2>Hydrography layers</h2>
     <div id="stream-checkbox-controls">
       <label class="row">
@@ -51,6 +39,7 @@
         NHD flowlines
       </label>
     </div>
+    <p class="muted coming-soon">To be added soon: USGS 3DHP flowlines</p>
     <!-- Populated by app.js's renderStreamSideControls() with one Left/Right/Off radio row
          per stream layer; only shown while swipe compare is active. -->
     <div id="stream-side-controls" hidden></div>

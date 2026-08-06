@@ -161,8 +161,8 @@ function buildBaseStyle() {
 }
 
 /**
- * Apply the sidebar's basemap radio choice ("street" or "satellite") to a map by flipping
- * layout visibility between the 'basemap-street' and 'basemap-satellite' layers.
+ * Apply a basemap choice ("street" or "satellite") to a map by flipping layout visibility
+ * between the 'basemap-street' and 'basemap-satellite' layers.
  *
  * Safe to call with `targetMap === null` (e.g. before the compare "after" map exists).
  *
@@ -174,6 +174,50 @@ function applyBasemapChoice(targetMap, choice) {
   setLayerVisibility(targetMap, 'basemap-satellite', choice === 'satellite');
 }
 
+/** The basemap applied to both maps in compare mode; changed only via BasemapControl's buttons. */
+let currentBasemap = 'street';
+
+/**
+ * Corner control with one button per basemap choice, styled to match MapLibre's own
+ * NavigationControl so it reads as part of the same top-right control cluster instead of
+ * living in the sidebar.
+ */
+class BasemapControl {
+  onAdd() {
+    this._container = document.createElement('div');
+    this._container.className = 'maplibregl-ctrl maplibregl-ctrl-group basemap-ctrl';
+    this._streetBtn = this._makeButton('🗺️', 'Street map (CartoCDN / OSM)', 'street');
+    this._satelliteBtn = this._makeButton('🛰️', 'Satellite imagery (USGS)', 'satellite');
+    this._container.append(this._streetBtn, this._satelliteBtn);
+    this._updateActiveButton();
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.remove();
+  }
+
+  _makeButton(icon, title, choice) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.title = title;
+    btn.setAttribute('aria-label', title);
+    btn.textContent = icon;
+    btn.addEventListener('click', () => {
+      currentBasemap = choice;
+      applyBasemapChoice(map, choice);
+      applyBasemapChoice(mapAfter, choice);
+      this._updateActiveButton();
+    });
+    return btn;
+  }
+
+  _updateActiveButton() {
+    this._streetBtn.classList.toggle('active', currentBasemap === 'street');
+    this._satelliteBtn.classList.toggle('active', currentBasemap === 'satellite');
+  }
+}
+
 const map = new maplibregl.Map({
   container: 'map',
   center: [-121.0, 47.4],
@@ -183,6 +227,7 @@ const map = new maplibregl.Map({
 
 // showCompass: false drops the reset-bearing-to-north button; kept the zoom in/out buttons.
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+map.addControl(new BasemapControl(), 'top-right');
 
 // Compare-mode state — the second map/control are created lazily on first toggle-in and then
 // kept alive for the session (see ensureAfterMap/toggleCompareMode) rather than being torn down
@@ -196,25 +241,13 @@ let polygonLayersReadyPromise = null;
 map.on('load', () => {
   addStreamLayers(map);
   wireStreamInteractivity();
-  wireBasemapControl();
   loadAllPolygonLayers();
   loadStats();
 });
 
-/** Wire up the "Basemap" street/satellite radio buttons. Applies to both maps in compare mode. */
-function wireBasemapControl() {
-  document.querySelectorAll('input[name="basemap-choice"]').forEach((radio) => {
-    radio.addEventListener('change', () => {
-      if (!radio.checked) return;
-      applyBasemapChoice(map, radio.value);
-      applyBasemapChoice(mapAfter, radio.value);
-    });
-  });
-}
-
-/** @returns {'street'|'satellite'} The currently selected basemap radio value. */
+/** @returns {'street'|'satellite'} The currently selected basemap choice. */
 function currentBasemapChoice() {
-  return document.querySelector('input[name="basemap-choice"]:checked').value;
+  return currentBasemap;
 }
 
 /**

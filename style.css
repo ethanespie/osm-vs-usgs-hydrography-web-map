@@ -129,6 +129,11 @@ html, body {
   font-size: 12px;
 }
 
+.coming-soon {
+  font-style: italic;
+  margin: -2px 0 0;
+}
+
 #info-content {
   background: #f9fafb;
   border: 1px solid #e5e7eb;
@@ -292,6 +297,18 @@ html, body {
 
 .modal-close:hover {
   color: #1f2937;
+}
+
+/* Basemap toggle control (see BasemapControl in app.js) — a maplibregl-ctrl-group like
+   NavigationControl, so it reads as part of the same top-right cluster; only the active-state
+   highlight is custom. */
+.basemap-ctrl button {
+  font-size: 15px;
+  line-height: 29px;
+}
+
+.basemap-ctrl button.active {
+  background-color: #d7dae0;
 }
 
 /* MapLibre popup tweaks */
