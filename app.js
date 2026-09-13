@@ -2,6 +2,8 @@
 // Config
 // ---------------------------------------------------------------------------
 
+const CARTO_API_KEY = 'cb1_3jlo_1_678dae8dd5b52e205ebc3f9f';
+
 const POLY_LAYERS = {
   counties: {
     file: 'data/osm_counties.geojson',
@@ -125,10 +127,10 @@ function buildBaseStyle() {
       'basemap-street': {
         type: 'raster',
         tiles: [
-          'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+          `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`,
+          `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`,
+          `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`,
+          `https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${CARTO_API_KEY}`,
         ],
         // one alternative to the above: "light_all" instead of "rastertiles/voyager"
         // (monochrome; no colors for highways, parks, etc)

@@ -1,0 +1,26 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Editor/IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Env / secrets ---
+.env
+.env.*
+
+# --- Logs ---
+*.log
+
+# Other misc stuff to ignore
+ignore/
