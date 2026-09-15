@@ -14,9 +14,9 @@
 <body>
 
 <div id="map"></div>
-<!-- #map-after and #compare-slider start empty/hidden. On first use of swipe compare, app.js's
-     ensureAfterMap() creates the second MapLibre map into #map-after, and toggleCompareMode()
-     creates the maplibregl.Compare slider control into #compare-slider. -->
+<!-- #map-after and #compare-slider start empty/hidden. On first use of swipe compare,
+     js/compareMode.js's ensureAfterMap() creates the second MapLibre map into #map-after, and
+     toggleCompareMode() creates the maplibregl.Compare slider control into #compare-slider. -->
 <div id="map-after" hidden></div>
 <div id="compare-slider" hidden></div>
 
@@ -40,8 +40,8 @@
       </label>
     </div>
     <p class="muted coming-soon">To be added soon: USGS 3DHP flowlines</p>
-    <!-- Populated by app.js's renderStreamSideControls() with one Left/Right/Off radio row
-         per stream layer; only shown while swipe compare is active. -->
+    <!-- Populated by js/compareMode.js's renderStreamSideControls() with one Left/Right/Off
+         radio row per stream layer; only shown while swipe compare is active. -->
     <div id="stream-side-controls" hidden></div>
   </section>
 
@@ -136,6 +136,6 @@
 <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
 <script src="https://unpkg.com/pmtiles@3/dist/pmtiles.js"></script>
 <script src="https://unpkg.com/@maplibre/maplibre-gl-compare@0.5/dist/maplibre-gl-compare.js"></script>
-<script src="app.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

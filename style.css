@@ -112,7 +112,7 @@ html, body {
   border-radius: 2px;
 }
 
-/* Must match the 'line-color' values for the osm/nhd entries in app.js's STREAM_LAYERS —
+/* Must match the 'line-color' values for the osm/nhd entries in js/config.js's STREAM_LAYERS —
    these swatches are the static checkbox-legend colors; STREAM_LAYERS drives the actual map. */
 .swatch-osm { background: #3420d1; }
 .swatch-nhd { background: #71e9e5; }
@@ -299,7 +299,7 @@ html, body {
   color: #1f2937;
 }
 
-/* Basemap toggle control (see BasemapControl in app.js) — a maplibregl-ctrl-group like
+/* Basemap toggle control (see BasemapControl in js/basemap.js) — a maplibregl-ctrl-group like
    NavigationControl, so it reads as part of the same top-right cluster; only the active-state
    highlight is custom. */
 .basemap-ctrl button {

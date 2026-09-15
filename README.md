@@ -33,7 +33,11 @@ University.
 
 ## Repo contents
 
-- [`index.html`](index.html), [`app.js`](app.js), [`style.css`](style.css): the site
+- [`index.html`](index.html), [`js/`](js/), [`style.css`](style.css): the site. `js/` is split
+  into several files that import from each other, using JavaScript's own built-in module system
+  (no separate build tool needed). `index.html` loads `main.js`, which pulls in the rest:
+  `config.js` (layer/API-key config), `state.js` (shared mutable state), `helpers.js` (pure
+  geometry/formatting helpers), `basemap.js`, `streams.js`, `polygons.js`, `compareMode.js`
 - `data/`: the small data files the site loads directly: boundary polygons
   (GeoJSON) and precomputed stream-mileage stats (JSON). The stream layers
   themselves (`osm_waterways.pmtiles`, `nhd_flowlines.pmtiles`) are too large for
@@ -52,7 +56,8 @@ University.
 python scripts/serve.py
 ```
 
-then open `http://127.0.0.1:8766`.
+then open `http://localtest.me:8766/index.html`. (Not `http://127.0.0.1:8766` — the CARTO
+basemap API key is restricted to specific origins, and `localtest.me` is on that list.)
 
 ## Data sources & attribution
 

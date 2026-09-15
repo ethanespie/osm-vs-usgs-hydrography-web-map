@@ -22,5 +22,9 @@ Thumbs.db
 # --- Logs ---
 *.log
 
-# Other misc stuff to ignore
-ignore/
+# --- Other misc stuff to ignore
+local/
+*.pmtiles
+*data.py
+data/data_refresh_inputs/
+data/pmtiles_source_layers/
