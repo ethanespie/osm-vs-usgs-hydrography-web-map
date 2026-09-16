@@ -1,18 +1,18 @@
 # WA Hydrography: OSM vs. USGS NHD
 
-> **Work in progress.** This README/repo/website are still a WIP.
-> Updates coming soon, including among other things, the addition of another layer for the USGS 3DHP data for Washington.
-
-
 **Live site:** https://osm-vs-nhd-hydrography.s3.us-west-2.amazonaws.com/index.html
 
-An interactive web map comparing how OpenStreetMap (OSM) and the USGS National
-Hydrography Dataset (NHD) each map rivers, streams, and canals across Washington
+An interactive web map comparing how OpenStreetMap ([OSM](https://www.openstreetmap.org/)) and the USGS National
+Hydrography Dataset ([NHD](https://www.usgs.gov/national-hydrography/national-hydrography-dataset)) each map rivers, streams, and canals across Washington
 State. Pick a county or watershed to see stream mileage from both datasets side by
 side, or use swipe-compare to see the two networks overlaid directly on the map.
 
+*To be added soon (Sep/Oct 2026):* a third hydrography layer, for the [3DHP](https://www.usgs.gov/3d-hydrography-program) data which the Washington Department of Ecology, along with parter agencies, are [currently in the process of creating](https://gis.ecology.wa.gov/portal/apps/sites/#/washington-state-hydrography-dataset-program/pages/3e5c409002fe481ca3fa82ec5106c527) to assist the USGS in their efforts to phase out the NHD data.
+
 This was  my final project for my graduate-level course _Open Web Mapping_ at Penn State
 University.
+
+
 
 ## Features
 
@@ -22,7 +22,7 @@ University.
 - Click a boundary (or pick one from a sidebar list) to see precomputed OSM vs. NHD
   stream mileage for that area
 - Swipe/compare mode for comparing the two layers side by side
-- Click an individual stream segment for some basic attributes
+- Click an individual stream segment to see some basic attributes
 
 ## Tech stack
 
@@ -46,8 +46,8 @@ University.
   Range support, which PMTiles needs, on top of Python's built-in static file
   server)
 - `scripts/process_new_input_data.py`: the data-prep pipeline that turns raw
-  OSM/NHD source data into everything in `data/`, plus the mileage stats. **(Coming
-  soon)**
+  OSM/NHD source data into everything in `data/`, plus the mileage stats. *(Coming
+  soon)*
 
 
 ## Running locally
