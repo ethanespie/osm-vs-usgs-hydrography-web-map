@@ -1,6 +1,6 @@
 # WA Hydrography: OSM vs. USGS NHD
 
-https://osm-vs-nhd-hydrography.s3.us-west-2.amazonaws.com/index.html
+https://osm-vs-usgs-hydrography.s3.us-west-2.amazonaws.com/index.html
 
 An interactive web map comparing how OpenStreetMap ([OSM](https://www.openstreetmap.org/)) and the USGS National
 Hydrography Dataset ([NHD](https://www.usgs.gov/national-hydrography/national-hydrography-dataset)) each map rivers, streams, and canals across Washington
