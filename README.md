@@ -1,13 +1,13 @@
 # WA Hydrography: OSM vs. USGS NHD
 
-**Live site:** https://osm-vs-nhd-hydrography.s3.us-west-2.amazonaws.com/index.html
+https://osm-vs-nhd-hydrography.s3.us-west-2.amazonaws.com/index.html
 
 An interactive web map comparing how OpenStreetMap ([OSM](https://www.openstreetmap.org/)) and the USGS National
 Hydrography Dataset ([NHD](https://www.usgs.gov/national-hydrography/national-hydrography-dataset)) each map rivers, streams, and canals across Washington
 State. Pick a county or watershed to see stream mileage from both datasets side by
 side, or use swipe-compare to see the two networks overlaid directly on the map.
 
-*To be added to the site soon (Sep/Oct 2026):* a third hydrography layer, for the [3DHP](https://www.usgs.gov/3d-hydrography-program) data which the Washington Department of Ecology, along with parter agencies, are [currently in the process of creating](https://gis.ecology.wa.gov/portal/apps/sites/#/washington-state-hydrography-dataset-program/pages/3e5c409002fe481ca3fa82ec5106c527) to assist the USGS in their efforts to phase out the NHD data.
+*To be added to the site soon (Sep/Oct 2026):* a third hydrography layer, for the [3DHP](https://www.usgs.gov/3d-hydrography-program) data which the Washington Department of Ecology, along with partner agencies, are [currently in the process of creating](https://gis.ecology.wa.gov/portal/apps/sites/#/washington-state-hydrography-dataset-program/pages/3e5c409002fe481ca3fa82ec5106c527) to assist the USGS in their efforts to phase out the NHD data.
 
 This was  my final project for my graduate-level course _Open Web Mapping_ at Penn State
 University.
